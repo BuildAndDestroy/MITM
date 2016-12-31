@@ -1,0 +1,8 @@
+screen  
+split -v
+focus right
+screen driftnet -i wlan0
+split
+focus down
+screen urlsnarf -i wlan0
+focus left
