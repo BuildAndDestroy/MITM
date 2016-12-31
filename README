@@ -1,0 +1,9 @@
+Simple MITM script for Kali users.
+
+Uses:
+
+    Behind the firewall/router.
+    Extract images and URL's using arpspoof, drifnet, and urlsnarf
+
+I am not held responsible for these scripts being used maliciously. This is to help pen-testers with automation.
+
