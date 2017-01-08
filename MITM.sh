@@ -2,7 +2,8 @@
 #Requires ipcalc
 
 function local_ips_f() {
-    IP_AND_MASK=`ifconfig | grep "inet addr" | head -n1 | sed 's|.*addr:\([0-9\.]*\).*Mask:\([0-9\.]*\)|\1/\2|g'`
+    #IP_AND_MASK=`ifconfig | grep "inet addr" | head -n1 | sed 's|.*addr:\([0-9\.]*\).*Mask:\([0-9\.]*\)|\1/\2|g'` # works on Ubuntu
+    IP_AND_MASK=`ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}'`
     NETWORK=`ipcalc "$IP_AND_MASK" | grep "Network:" | sed 's|^Network:\s*\([0-9/\.]*\).*|\1|g'`
     echo ''
     nmap -n -sP "$NETWORK" -oG - | awk '/Up$/{print $2}'
