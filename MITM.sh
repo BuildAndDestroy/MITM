@@ -1,5 +1,13 @@
 #!/bin/bash
 
+function local_ips_f() {
+    IP_AND_MASK=`ifconfig | grep "inet addr" | head -n1 | sed 's|.*addr:\([0-9\.]*\).*Mask:\([0-9\.]*\)|\1/\2|g'`
+    NETWORK=`ipcalc "$IP_AND_MASK" | grep "Network:" | sed 's|^Network:\s*\([0-9/\.]*\).*|\1|g'`
+    echo ''
+    nmap -n -sP "$NETWORK" -oG - | awk '/Up$/{print $2}'
+    echo ''
+}
+
 function routeme_f() {
     echo 'Configuring machine to allow port forwarding...'
     if [ $(cat /proc/sys/net/ipv4/ip_forward) != 1 ]; then
@@ -46,6 +54,7 @@ routeme_f
 gateway_device_f
 #macspoof_f
 gateway_f
+local_ips_f
 arpspoof_f
 
 sleep 4
