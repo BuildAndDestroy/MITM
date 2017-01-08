@@ -1,4 +1,5 @@
 #!/bin/bash
+#Requires ipcalc
 
 function local_ips_f() {
     IP_AND_MASK=`ifconfig | grep "inet addr" | head -n1 | sed 's|.*addr:\([0-9\.]*\).*Mask:\([0-9\.]*\)|\1/\2|g'`
